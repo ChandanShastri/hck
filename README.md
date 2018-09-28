@@ -1,2 +1,4 @@
 # hck
-The Main CodeBase of my Intern Code for Hacker Earth
+Chandan Shastri   | crshastri@gmail.com
+
+This is the Main CodeBase of my Internship Project for HackerEarth.
