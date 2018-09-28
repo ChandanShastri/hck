@@ -1,56 +1,102 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="css/b.css">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basket</title>
+  <link rel="stylesheet" href="css/custom.css">
   <script src="js/jq.js"></script>
-  <script src="js/pp.js"></script>
-  <script src="js/b.js"></script>
-  <script src="js/bb.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124730361-1"></script>
-  <script src="js/Sc.js"></script>
-  <title>
-      Chandan Shastri's Showcase
-  </title>
+  <script src="js/cart.js"></script>
 </head>
 
-<body id="bodyplace" oncontextmenu="cleanup()" class="container-fluid">
-  <br>
-  <br>
-  <font color="black">
-    <hr><br><h1><center>Welcome to Chandan Shastri's Online Resume</h1></center>
-    <br><hr><br>
-    <center>
-
-        <a href="https://linkedin.com/in/chandanshastri" target="_blank"><b>LinkedIn</b></a> |
-        <a href="https://github.com/ChandanShastri" target="_blank"><b>GitHub</b></a> |
-          <a href="mailto:crshastri@gmail.com" target="_blank"><b>E-Mail</b></a> |
-          <a href="https://facebook.com/chandan.shastri" target="_blank">
-            <b>Facebook</b></a> |
-            <a href="https://youtube.com/c/chandanshastri" target="_blank">
-              <b>YouTube</b></a>
-    </center>
-  </font>
-  <br><hr>
-  <br>
-  <center>
-    <h6 class="red-text">I am working on some other projects right now, <br><br>
-      So I didn't get enough time to work on my own Site...! <br><br>
-      But you can checkout my projects by clicking the buttons below :<br><br><br>
-      <div class="row">
-          <div class="span6" style="float: none; margin: 0 auto;">
-      <a href="http://rrscs.nrsc.gov.in/RRSCSAWS/index.php" target="_blank"><button type="button" class="btn btn-primary btn-block">ISRO - RRSC-S MDAS</button></a>
-    &nbsp ----- &nbsp
-      <a href="http://alvasplacement.com" target="_blank"><button type="button" class="btn btn-primary btn-block">Alva's Placement Cell</button></a>
-  </div>
-</div>
-</h6><br><hr><br>
-<div>
-<img src="imgs/cs_logo.png" class="img-thumbnail" alt="Chandan Shastri's Logo" width=200px height="100px"></div><br><br>
-  </center>
+<body>
+  <main>
+    <div class="basket">
+      <div class="basket-module">
+        <label for="promo-code">Enter a promotional code</label>
+        <input id="promo-code" type="text" name="promo-code" maxlength="5" class="promo-code-field">
+        <button class="promo-code-cta">Apply</button>
+      </div>
+      <div class="basket-labels">
+        <ul>
+          <li class="item item-heading">Item</li>
+          <li class="price">Price</li>
+          <li class="quantity">Quantity</li>
+          <li class="subtotal">Subtotal</li>
+        </ul>
+      </div>
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="http://placehold.it/120x166" alt="Placholder Image 2" class="product-frame">
+          </div>
+          <div class="product-details">
+            <h1><strong><span class="item-quantity">4</span> x Eliza J</strong> Lace Sleeve Cuff Dress</h1>
+            <p><strong>Navy, Size 18</strong></p>
+            <p>Product Code - 232321939</p>
+          </div>
+        </div>
+        <div class="price">26.00</div>
+        <div class="quantity">
+          <input type="number" value="4" min="1" class="quantity-field">
+        </div>
+        <div class="subtotal">104.00</div>
+        <div class="remove">
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="http://placehold.it/120x166" alt="Placholder Image 2" class="product-frame">
+          </div>
+          <div class="product-details">
+            <h1><strong><span class="item-quantity">1</span> x Whistles</strong> Amella Lace Midi Dress</h1>
+            <p><strong>Navy, Size 10</strong></p>
+            <p>Product Code - 232321939</p>
+          </div>
+        </div>
+        <div class="price">26.00</div>
+        <div class="quantity">
+          <input type="number" value="1" min="1" class="quantity-field">
+        </div>
+        <div class="subtotal">26.00</div>
+        <div class="remove">
+          <button>Remove</button>
+        </div>
+      </div>
+    </div>
+    <aside>
+      <div class="summary">
+        <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
+        <div class="summary-subtotal">
+          <div class="subtotal-title">Subtotal</div>
+          <div class="subtotal-value final-value" id="basket-subtotal">130.00</div>
+          <div class="summary-promo hide">
+            <div class="promo-title">Promotion</div>
+            <div class="promo-value final-value" id="basket-promo"></div>
+          </div>
+        </div>
+        <div class="summary-delivery">
+          <select name="delivery-collection" class="summary-delivery-selection">
+              <option value="0" selected="selected">Select Collection or Delivery</option>
+             <option value="collection">Collection</option>
+             <option value="first-class">Royal Mail 1st Class</option>
+             <option value="second-class">Royal Mail 2nd Class</option>
+             <option value="signed-for">Royal Mail Special Delivery</option>
+          </select>
+        </div>
+        <div class="summary-total">
+          <div class="total-title">Total</div>
+          <div class="total-value final-value" id="basket-total">130.00</div>
+        </div>
+        <div class="summary-checkout">
+          <button class="checkout-cta">Go to Secure Checkout</button>
+        </div>
+      </div>
+    </aside>
+  </main>
 </body>
-<!-- Made by Chandan Shastri. -->
+
 </html>
