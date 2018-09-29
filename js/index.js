@@ -1,45 +1,19 @@
-/* Set values + misc */
-var promoCode;
-var promoPrice;
 var fadeTime = 300;
 
-
-var Data=[ { "id": 9090, "name": "Item1", "price": 200, "discount": 10, "type": "fiction", "img_url": "https://store.lexisnexis.com.au/__data/media/catalog/thumb//placeholder.jpg" }, { "id": 9091, "name": "Item2", "price": 250, "discount": 15, "type": "literature", "img_url": "https://store.lexisnexis.com.au/__data/media/catalog/thumb//placeholder.jpg" }, { "id": 9092, "name": "Item3", "price": 320, "discount": 5, "type": "literature", "img_url": "https://store.lexisnexis.com.au/__data/media/catalog/thumb//placeholder.jpg" }, { "id": 9093, "name": "Item4", "price": 290, "discount": 0, "type": "thriller", "img_url": "https://store.lexisnexis.com.au/__data/media/catalog/thumb//placeholder.jpg" }, { "id": 9094, "name": "Item5", "price": 500, "discount": 25, "type": "thriller", "img_url": "https://store.lexisnexis.com.au/__data/media/catalog/thumb//placeholder.jpg" }, { "id": 9095, "name": "Item6", "price": 150, "discount": 5, "type": "literature", "img_url": "https://store.lexisnexis.com.au/__data/media/catalog/thumb//placeholder.jpg" }, { "id": 9096, "name": "Item7", "price": 700, "discount": 22, "type": "literature", "img_url": "https://store.lexisnexis.com.au/__data/media/catalog/thumb//placeholder.jpg" }, { "id": 9097, "name": "Item8", "price": 350, "discount": 18, "type": "fiction", "img_url": "https://store.lexisnexis.com.au/__data/media/catalog/thumb//placeholder.jpg" } ];
-/* Assign actions */
-$('.quantity input').change(function() {
+$("#ListGen").on("change",".quantity input",(function() {
   updateQuantity(this);
-});
+}));
 
-$('.remove button').click(function() {
+$("#ListGen").on("click",".remove button",(function() {
   removeItem(this);
-});
+}));
 
 $(document).ready(function() {
+  for(i=0;i<Data.length;i++)
+  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><strong><span class='item-quantity'>1</span> x "+Data[i]['name']+"</strong></h1><p><strong>Type : "+Data[i]['type']+"</strong></p><p><strong>Discount : "+Data[i]['discount']+"</strong></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove</button></div></div>");
   updateSumItems();
 });
 
-$('.promo-code-cta').click(function() {
-
-  promoCode = $('#promo-code').val();
-
-  if (promoCode == '10off' || promoCode == '10OFF') {
-    //If promoPrice has no value, set it as 10 for the 10OFF promocode
-    if (!promoPrice) {
-      promoPrice = 10;
-    } else if (promoCode) {
-      promoPrice = promoPrice * 1;
-    }
-  } else if (promoCode != '') {
-    alert("Invalid Promo Code");
-    promoPrice = 0;
-  }
-  //If there is a promoPrice that has been set (it means there is a valid promoCode input) show promo
-  if (promoPrice) {
-    $('.summary-promo').removeClass('hide');
-    $('.promo-value').text(promoPrice.toFixed(2));
-    recalculateCart(true);
-  }
-});
 
 /* Recalculate cart */
 function recalculateCart(onlyTotal) {
@@ -52,17 +26,6 @@ function recalculateCart(onlyTotal) {
 
   /* Calculate totals */
   var total = subtotal;
-
-  //If there is a valid promoCode, and subtotal < 10 subtract from total
-  var promoPrice = parseFloat($('.promo-value').text());
-  if (promoPrice) {
-    if (subtotal >= 10) {
-      total -= promoPrice;
-    } else {
-      alert('Order must be more than £10 for Promo code to apply.');
-      $('.summary-promo').addClass('hide');
-    }
-  }
 
   /*If switch for update only total, update only total display*/
   if (onlyTotal) {
