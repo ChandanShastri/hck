@@ -1,4 +1,4 @@
-var fadeTime = 300;
+var fadeTime = 200;
 
 $("#ListGen").on("change",".quantity input",(function() {
   updateQuantity(this);
@@ -10,7 +10,7 @@ $("#ListGen").on("click",".remove button",(function() {
 
 $(document).ready(function() {
   for(i=0;i<Data.length;i++)
-  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><strong><span class='item-quantity'>1</span> x "+Data[i]['name']+"</strong></h1><p><strong>Type : "+Data[i]['type']+"</strong></p><p><strong>Discount : "+Data[i]['discount']+"</strong></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove</button></div></div>");
+  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><strong><span class='item-quantity'>1</span> x "+Data[i]['name']+"</strong></h1><p><strong>Type : "+Data[i]['type']+"</strong></p><p><strong>Discount : "+Data[i]['discount']+" &percnt;</strong></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove from Cart</button></div></div>");
   updateSumItems();
 });
 
@@ -49,6 +49,18 @@ function recalculateCart(onlyTotal) {
   }
 }
 
+function reloadData(){
+
+  document.getElementById('ReloadItem').innerHTML="";
+
+  for(i=0;i<Data.length;i++)
+  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><strong><span class='item-quantity'>1</span> x "+Data[i]['name']+"</strong></h1><p><strong>Type : "+Data[i]['type']+"</strong></p><p><strong>Discount : "+Data[i]['discount']+" &percnt;</strong></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove from Cart</button></div></div>");
+  updateSumItems();
+  updateQuantity();
+  recalculateCart();
+}
+
+
 /* Update quantity */
 function updateQuantity(quantityInput) {
   /* Calculate line price */
@@ -76,6 +88,10 @@ function updateSumItems() {
     sumItems += parseInt($(this).val());
   });
   $('.total-items').text(sumItems);
+  if(sumItems==0)
+  {
+    document.getElementById('ReloadItem').innerHTML="<br><br><button class='checkout-ctc' onclick='reloadData()'>Reload JSON Data</button>";
+  }
 }
 
 /* Remove item from cart */
@@ -86,5 +102,6 @@ function removeItem(removeButton) {
     productRow.remove();
     recalculateCart();
     updateSumItems();
+
   });
 }

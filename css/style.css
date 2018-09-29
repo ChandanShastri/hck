@@ -80,7 +80,7 @@ button,
 .subtotal-value:before,
 .total-value:before,
 .promo-value:before {
-  content: '£';
+  content: 'Rs ';
 }
 
 .hide {
@@ -157,6 +157,7 @@ li {
   color: #111;
   display: inline-block;
   padding: 0.625rem 0;
+  font-size: 1rem;
 }
 
 li.price:before,
@@ -176,6 +177,7 @@ li.subtotal:before {
 
 .subtotal {
   text-align: right;
+  font-size: 1rem;
 }
 
 .remove {
@@ -189,7 +191,7 @@ li.subtotal:before {
 
 .remove button {
   background-color: transparent;
-  color: #777;
+  color: red;
   float: none;
   text-decoration: underline;
   text-transform: uppercase;
@@ -207,6 +209,11 @@ li.subtotal:before {
   padding: 1rem 0;
   position: relative;
 }
+
+#ReloadItem {
+  font-size: 1.5rem;
+}
+
 
 .product-image {
   width: 35%;
@@ -228,12 +235,13 @@ li.subtotal:before {
 }
 
 .quantity-field {
-  background-color: #ccc;
-  border: 1px solid #aaa;
+  background-color: #dee;
+  border: 2px solid #bbb;
   border-radius: 4px;
-  font-size: 0.625rem;
-  padding: 2px;
+  font-size: 1rem;
+  padding: 5px;
   width: 3.75rem;
+  height: 1rem;
 }
 
 aside {
@@ -325,6 +333,18 @@ aside {
   text-transform: uppercase;
   padding: 0.625rem 0;
   width: 100%;
+}
+
+
+.checkout-ctc {
+  display: block;
+  float: none;
+  font-size: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0.625rem 0;
+  width: 100%;
+  background-color: red;
 }
 
 .summary-delivery-selection {
