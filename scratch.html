@@ -1,0 +1,13 @@
+<div class='basket-product'>
+  <div class='item'>
+    <div class='product-image'>
+      <img src='"+DataB[i]['img_url']+"' class='product-frame'></div>
+      <div class='product-details'><h1><h5><span class='item-quantity'>"+DataB[i]['quantity']+"</span> x "+DataB[i]['name']+"</h5></h1>
+        <p><h6>Type : "+DataB[i]['type']+"</h6></p>
+        <p><h6>Discount : <span class='disc'>"+DataB[i]['discount']+"</span> &percnt;</h6>
+        </p><p class='tens'>Product ID - <span class='idtagr'>"+DataB[i]['id']+"</span></p></div>
+      </div><div class='price'>"+DataB[i]['price']+"</div>
+      <div class='quantity'><input type='number' value='"+DataB[i]['quantity']+"' min='1' class='quantity-field'></div>
+      <div class='subtotal'>"+DataB[i]['price']+"</div>
+      <div class='remove'><button onclick='RemoveData("+DataB[i]['id']+")'>Remove from Cart</button></div>
+    </div>");

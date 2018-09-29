@@ -16,19 +16,47 @@ function DataGen(){
   if(DataB==null)
   {
   DataB = JSON.parse(localStorage.getItem('RawData'));
-  console.log(DataB);
-  }
   if(DataB==null)
   {
-  localStorage.setItem('RawData', JSON.stringify(Data));
-  DataB = JSON.parse(localStorage.getItem('RawData'));
+    localStorage.setItem('RawData', JSON.stringify(Data));
+    DataB = JSON.parse(localStorage.getItem('RawData'));
+  }
+  console.log('DataB is Loaded with localStorage Data');
+  $('#ListGen').each(function () {
+    console.log(this);
+      //updateQuantity(this);
+});
+
+
+
+  console.log(DataB);
+  if(DataB!=null){
+  for(i=0;i<DataB.length;i++){
+    $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+DataB[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><h5><span class='item-quantity'>"+DataB[i]['quantity']+"</span> x "+DataB[i]['name']+"</h5></h1><p><h6>Type : "+DataB[i]['type']+"</h6></p><p><h6 class='dst'>Discount : <span class='disc'>"+DataB[i]['discount']+"</span> &percnt;</h6></p><p class='tens'>Product ID - <span class='idtagr'>"+DataB[i]['id']+"</span></p></div></div><div class='price'>"+DataB[i]['price']+"</div><div class='quantity'><input type='number' value='"+DataB[i]['quantity']+"' min='1' class='quantity-field'></div><div class='subtotal'>"+DataB[i]['price']+"</div><div class='remove'><button onclick='RemoveData("+DataB[i]['id']+")'>Remove from Cart</button></div></div>");
+}}
+/*
+$('.basket-product').each(function () {
+    updateQuantity(this);
+    console.log('CHECK');
+});
+*/
+
+
+  }
+  else {
+    for(i=0;i<DataB.length;i++){
+      $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+DataB[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><h5><span class='item-quantity'>"+DataB[i]['quantity']+"</span> x "+DataB[i]['name']+"</h5></h1><p><h6>Type : "+DataB[i]['type']+"</h6></p><p><h6 class='dst'>Discount : <span class='disc'>"+DataB[i]['discount']+"</span> &percnt;</h6></p><p class='tens'>Product ID - <span class='idtagr'>"+DataB[i]['id']+"</span></p></div></div><div class='price'>"+DataB[i]['price']+"</div><div class='quantity'><input type='number' value='"+DataB[i]['quantity']+"' min='1' class='quantity-field'></div><div class='subtotal'>"+DataB[i]['price']+"</div><div class='remove'><button onclick='RemoveData("+DataB[i]['id']+")'>Remove from Cart</button></div></div>");
+  }
   }
 
-  for(i=0;i<DataB.length;i++)
-  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+DataB[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><h5><span class='item-quantity'>1</span> x "+DataB[i]['name']+"</h5></h1><p><h6>Type : "+DataB[i]['type']+"</h6></p><p><h6>Discount : <span class='disc'>"+DataB[i]['discount']+"</span> &percnt;</h6></p><p>Product ID - "+DataB[i]['id']+"</p></div></div><div class='price'>"+DataB[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+DataB[i]['price']+"</div><div class='remove'><button onclick='RemoveData("+DataB[i]['id']+")'>Remove from Cart</button></div></div>");
+
 
 
 }
+
+
+
+
 
 $(document).ready(function() {
   DataGen();
@@ -60,31 +88,36 @@ localStorage.setItem('RawData', JSON.stringify(DataB));
 console.log('Changes saved to Local Storage.')
 }
 
-/* Recalculate cart */
+
 
 function recalculateCart(onlyTotal) {
   var subtotal = 0;
 
-  /* Sum up row totals */
+
   $('.basket-product').each(function() {
     subtotal += parseFloat($(this).children('.subtotal').text());
   });
 
-  /* Calculate totals */
-  var total = subtotal;
 
-  /*If switch for update only total, update only total display*/
+  var total = subtotal;
+ var discount=total*(0.12);
+
+ var tdiscount=total*(0.04);
+ total=total-discount-tdiscount;
+
   if (onlyTotal) {
-    /* Update total display */
+
     $('.total-value').fadeOut(fadeTime, function() {
       $('#basket-total').html(total.toFixed(2));
       $('.total-value').fadeIn(fadeTime);
     });
   } else {
-    /* Update summary display. */
+
     $('.final-value').fadeOut(fadeTime, function() {
       $('#basket-subtotal').html(subtotal.toFixed(2));
       $('#basket-total').html(total.toFixed(2));
+      $('#basket-discount').html(discount.toFixed(2));
+      $('#basket-tdiscount').html(tdiscount.toFixed(2));
       if (total == 0) {
         $('.checkout-cta').fadeOut(fadeTime);
       } else {
@@ -95,8 +128,13 @@ function recalculateCart(onlyTotal) {
   }
 }
 
+
+
+
+
 function reloadData(){
   document.getElementById('ReloadItem').innerHTML="";
+  console.log('Data Loaded from Original JSON');
   localStorage.setItem('RawData', JSON.stringify(Data));
   DataB = JSON.parse(localStorage.getItem('RawData'));
   DataGen();
@@ -105,13 +143,36 @@ function reloadData(){
   recalculateCart();
 }
 
-/* Update quantity */
+
+
+
+
+
 function updateQuantity(quantityInput) {
-  /* Calculate line price */
+
   var productRow = $(quantityInput).parent().parent();
   var price = parseFloat(productRow.children('.price').text());
+  var idtag = parseInt(productRow.children('.idtagr').text());
   var quantity = $(quantityInput).val();
   var linePrice = price * quantity;
+
+
+var productIDtag = $(quantityInput).parent().parent();
+var idtag = parseInt(productIDtag.children('.item').children('.product-details').children('.tens').children('.idtagr').text());
+
+  console.log(idtag);
+  for(i=0;i<DataB.length;i++)
+  {
+    if(DataB[i]['id']==idtag)
+    {
+      console.log('Item Quantity Updated');
+      DataB[i]['quantity']=quantity;
+      console.log(DataB[i]);
+      localStorage.setItem('RawData', JSON.stringify(DataB));
+    break;
+  }
+  }
+
 
 
   productRow.children('.subtotal').each(function() {
