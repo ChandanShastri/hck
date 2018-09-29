@@ -1,3 +1,4 @@
+var DataB;
 var fadeTime = 200;
 
 $("#ListGen").on("change",".quantity input",(function() {
@@ -8,14 +9,59 @@ $("#ListGen").on("click",".remove button",(function() {
   removeItem(this);
 }));
 
+function DataGen(){
+  console.log('Developed by Chandan Shastri - crshastri@gmail.com');
+  console.log(DataB);
+
+  if(DataB==null)
+  {
+  DataB = JSON.parse(localStorage.getItem('RawData'));
+  console.log(DataB);
+  }
+  if(DataB==null)
+  {
+  localStorage.setItem('RawData', JSON.stringify(Data));
+  DataB = JSON.parse(localStorage.getItem('RawData'));
+  }
+
+  for(i=0;i<DataB.length;i++)
+  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+DataB[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><h5><span class='item-quantity'>1</span> x "+DataB[i]['name']+"</h5></h1><p><h6>Type : "+DataB[i]['type']+"</h6></p><p><h6>Discount : <span class='disc'>"+DataB[i]['discount']+"</span> &percnt;</h6></p><p>Product ID - "+DataB[i]['id']+"</p></div></div><div class='price'>"+DataB[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+DataB[i]['price']+"</div><div class='remove'><button onclick='RemoveData("+DataB[i]['id']+")'>Remove from Cart</button></div></div>");
+
+
+}
+
 $(document).ready(function() {
-  for(i=0;i<Data.length;i++)
-  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><b><span class='item-quantity'>1</span> x "+Data[i]['name']+"</b></h1><p><h6>Type : "+Data[i]['type']+"</h6></p><p><h6>Discount : "+Data[i]['discount']+" &percnt;</h6></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove from Cart</button></div></div>");
+  DataGen();
   updateSumItems();
+  updateQuantity();
+  recalculateCart();
 });
 
 
+
+
+function RemoveData(d){
+console.log('Index of '+d);
+for(i=0;i<DataB.length;i++)
+{
+  if(DataB[i]['id']==d)
+  {
+    console.log('Item Deleted');
+    console.log(DataB[i]);
+    M.toast({html: DataB[i]['name']+' &nbsp has been deleted from the Cart'});
+  DataB.splice(i,1);
+  break;
+}
+
+}
+
+console.log(DataB);
+localStorage.setItem('RawData', JSON.stringify(DataB));
+console.log('Changes saved to Local Storage.')
+}
+
 /* Recalculate cart */
+
 function recalculateCart(onlyTotal) {
   var subtotal = 0;
 
@@ -50,16 +96,14 @@ function recalculateCart(onlyTotal) {
 }
 
 function reloadData(){
-
   document.getElementById('ReloadItem').innerHTML="";
-
-  for(i=0;i<Data.length;i++)
-  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><b><span class='item-quantity'>1</span> x "+Data[i]['name']+"</b></h1><p><h6>Type : "+Data[i]['type']+"</h6></p><p><h6>Discount : "+Data[i]['discount']+" &percnt;</h6></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove from Cart</button></div></div>");
+  localStorage.setItem('RawData', JSON.stringify(Data));
+  DataB = JSON.parse(localStorage.getItem('RawData'));
+  DataGen();
   updateSumItems();
   updateQuantity();
   recalculateCart();
 }
-
 
 /* Update quantity */
 function updateQuantity(quantityInput) {
@@ -69,7 +113,7 @@ function updateQuantity(quantityInput) {
   var quantity = $(quantityInput).val();
   var linePrice = price * quantity;
 
-  /* Update line price display and recalc cart totals */
+
   productRow.children('.subtotal').each(function() {
     $(this).fadeOut(fadeTime, function() {
       $(this).text(linePrice.toFixed(2));
@@ -94,13 +138,12 @@ function updateSumItems() {
   }
 }
 
-/* Remove item from cart */
+
 function removeItem(removeButton) {
-  /* Remove row from DOM and recalc cart total */
+
   var productRow = $(removeButton).parent().parent();
   productRow.slideUp(fadeTime, function() {
     productRow.remove();
-
     recalculateCart();
     updateSumItems();
 

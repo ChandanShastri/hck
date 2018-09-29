@@ -8,14 +8,32 @@
 
   <link rel="stylesheet" href="css/normalize.min.css">
   <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mm.css">
 
   <script src="js/data.js"></script>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+  </style>
 </head>
 
 
 <body>
+  <nav>
+      <div class="nav-wrapper">
+        <a href="http://linkedin.com/in/chandanshastri" class="brand-logo center" target="_blank">FastCart - By Chandan Shastri</a>
+      </div>
+    </nav>
+
   <main>
     <div class="basket">
 
@@ -28,21 +46,13 @@
         </ul>
       </div>
       <div id="ListGen">
-
-
-
-
-
      </div>
     </div>
-
-
-
 
 <br><br>
     <aside>
       <div class="summary">
-        <div class="summary-total-items"><h6>Total Number of Items :</h6><h6 class="total-items"></h6></div>
+        <div class="summary-total-items"><b>Total Number of Items : <b><span class="total-items"></span></div>
         <div class="summary-subtotal">
           <div class="subtotal-title">Amount</div>
           <div class="subtotal-value final-value" id="basket-subtotal">0.00</div>
@@ -52,8 +62,13 @@
           <div class="subtotal-value final-value" id="basket-discount">00.00</div>
         </div>
 
+        <div class="summary-subtotal">
+          <div class="subtotal-title">Type Discount</div>
+          <div class="subtotal-value final-value" id="basket-tdiscount">00.00</div>
+        </div>
+
         <div class="summary-total">
-          <div class="total-title">Total</div>
+          <div class="total-title">Grand Total</div>
           <div class="total-value final-value" id="basket-total">0.00</div>
         </div>
         <div class="summary-checkout">
@@ -66,11 +81,15 @@
       </div>
     </aside>
 
+<!-- crshastri@gmail.com -->
 
   </main>
+
 </body>
+
+<footer class="page-footer"><div class="container"><center><b><h6>Designed and Developed by Chandan Shastri. For HackerEarth Pre-Internship Interview Test.</h6><b><br></div></center></footer>
+
 <script src='js/jquery.min.js'></script>
+<script src="js/mm.js"></script>
 <script src="js/index.js"></script>
-
-
 </html>
