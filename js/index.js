@@ -10,7 +10,7 @@ $("#ListGen").on("click",".remove button",(function() {
 
 $(document).ready(function() {
   for(i=0;i<Data.length;i++)
-  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><strong><span class='item-quantity'>1</span> x "+Data[i]['name']+"</strong></h1><p><strong>Type : "+Data[i]['type']+"</strong></p><p><strong>Discount : "+Data[i]['discount']+" &percnt;</strong></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove from Cart</button></div></div>");
+  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><b><span class='item-quantity'>1</span> x "+Data[i]['name']+"</b></h1><p><h6>Type : "+Data[i]['type']+"</h6></p><p><h6>Discount : "+Data[i]['discount']+" &percnt;</h6></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove from Cart</button></div></div>");
   updateSumItems();
 });
 
@@ -54,7 +54,7 @@ function reloadData(){
   document.getElementById('ReloadItem').innerHTML="";
 
   for(i=0;i<Data.length;i++)
-  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><strong><span class='item-quantity'>1</span> x "+Data[i]['name']+"</strong></h1><p><strong>Type : "+Data[i]['type']+"</strong></p><p><strong>Discount : "+Data[i]['discount']+" &percnt;</strong></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove from Cart</button></div></div>");
+  $("#ListGen").append("<div class='basket-product'><div class='item'><div class='product-image'><img src='"+Data[i]['img_url']+"' class='product-frame'></div><div class='product-details'><h1><b><span class='item-quantity'>1</span> x "+Data[i]['name']+"</b></h1><p><h6>Type : "+Data[i]['type']+"</h6></p><p><h6>Discount : "+Data[i]['discount']+" &percnt;</h6></p><p>Product ID - "+Data[i]['id']+"</p></div></div><div class='price'>"+Data[i]['price']+"</div><div class='quantity'><input type='number' value='1' min='1' class='quantity-field'></div><div class='subtotal'>"+Data[i]['price']+"</div><div class='remove'><button>Remove from Cart</button></div></div>");
   updateSumItems();
   updateQuantity();
   recalculateCart();
@@ -100,6 +100,7 @@ function removeItem(removeButton) {
   var productRow = $(removeButton).parent().parent();
   productRow.slideUp(fadeTime, function() {
     productRow.remove();
+
     recalculateCart();
     updateSumItems();
 
